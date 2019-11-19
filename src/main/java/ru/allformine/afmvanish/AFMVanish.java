@@ -16,7 +16,7 @@ import org.spongepowered.api.plugin.Plugin;
         }
 )
 public class AFMVanish {
-
+// кря
     @Inject
     private Logger logger;
 
