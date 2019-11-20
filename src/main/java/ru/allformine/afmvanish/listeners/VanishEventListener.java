@@ -5,7 +5,6 @@ import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.weather.Lightning;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.Order;
 import org.spongepowered.api.event.action.InteractEvent;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
 import org.spongepowered.api.event.command.TabCompleteEvent;
@@ -24,11 +23,6 @@ import ru.allformine.afmvanish.vanish.VanishManager;
 import java.util.ArrayList;
 
 public class VanishEventListener {
-    @Listener(order = Order.PRE)
-    public void onPlayerLogin(ClientConnectionEvent.Login event) {
-        VanishManager.playersToRemove.add(event.getProfile().getName().get());
-    }
-
     @Listener
     public void onPlayerJoin(ClientConnectionEvent.Join event) {
         if (!event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
@@ -40,8 +34,6 @@ public class VanishEventListener {
         if (event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
             VanishManager.vanishPlayer(event.getTargetEntity(), true);
         }
-
-        VanishManager.playersToRemove.remove(event.getTargetEntity().getName());
 
         event.setMessageCancelled(true);
     }

@@ -33,7 +33,7 @@ public class VanishEffects {
 
         player.getWorld().spawnEntities(batty);
 
-        Task.builder().execute(() -> effectBatsCleanup(batty)).delayTicks(60).submit(Sponge.getPluginManager().getPlugin("afmcp").get());
+        Task.builder().execute(() -> effectBatsCleanup(batty)).delayTicks(60).submit(Sponge.getPluginManager().getPlugin("afmvanish").get());
     }
 
     private static void effectBatsCleanup(List<Entity> bats) {

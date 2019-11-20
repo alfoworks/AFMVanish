@@ -32,8 +32,6 @@ targetCompatibility = '1.8'
 
 dependencies {
     compile 'org.spongepowered:spongeapi:7.1.0'
-    compile name: 'uchat'
-    compile name: "ef"
 
     compile name: 'packetgate'
 }

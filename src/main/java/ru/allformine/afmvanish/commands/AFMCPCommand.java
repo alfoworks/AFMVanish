@@ -10,8 +10,8 @@ import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
 
 public class AFMCPCommand implements CommandExecutor {
-    @SuppressWarnings("NullableProblems")
-    @Override public CommandResult execute(CommandSource scr, CommandContext args) throws CommandException {
+    @Override
+    public CommandResult execute(CommandSource scr, CommandContext args) throws CommandException {
         return CommandResult.success();
     }
 

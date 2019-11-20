@@ -11,9 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VanishManager {
-    public static final String vanishPermission = "afmcp.vanish.staff";
+    public static final String vanishPermission = "afmvanish.vanish.staff";
 
-    public static List<String> playersToRemove = new ArrayList<>();
     public static List<Player> vanishedPlayers = new ArrayList<>();
     private static List<Player> couldInteract = new ArrayList<>();
 
@@ -34,7 +33,7 @@ public class VanishManager {
 
     @SuppressWarnings("WeakerAccess")
     public static void makeCantInteract(Player player){
-
+        couldInteract.remove(player);
     }
 
     public static boolean switchCanInteract(Player player){
@@ -52,6 +51,7 @@ public class VanishManager {
         tabList.removeTabListPlayer(player.getName());
 
         vanishedPlayers.add(player);
+        makeCantInteract(player);
 
         vanishNotify(String.format(onJoin ? "%s скрытно вошёл в игру" : "%s вошел в ваниш", player.getName()));
     }
@@ -60,7 +60,7 @@ public class VanishManager {
         setVanish(player, false, onLeave);
 
         vanishedPlayers.remove(player);
-        makeCantInteract(player);
+        makeCanInteract(player);
 
         vanishNotify(String.format(onLeave ? "%s вышел из игры (персонал)" : "%s вышел из ваниша", player.getName()));
 

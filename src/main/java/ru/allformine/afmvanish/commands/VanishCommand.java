@@ -7,7 +7,7 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
-import ru.allformine.afmcp.vanish.VanishManager;
+import ru.allformine.afmvanish.vanish.VanishManager;
 
 import java.util.List;
 import java.util.Optional;
