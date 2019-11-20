@@ -27,6 +27,7 @@ public class VanishEventListener {
     public void onPlayerJoin(ClientConnectionEvent.Join event) {
         if (!event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
             VanishManager.tabList.addTabListPlayer(event.getTargetEntity().getName());
+            VanishManager.makeCanInteract(event.getTargetEntity());
 
             return;
         }

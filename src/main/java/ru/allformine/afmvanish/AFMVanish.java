@@ -28,7 +28,6 @@ import java.util.Optional;
                 "Iterator, HeroBrine1st_Erq"
         }
 )
-
 public class AFMVanish {
     @Listener
     public void preInit(GamePreInitializationEvent event) {
