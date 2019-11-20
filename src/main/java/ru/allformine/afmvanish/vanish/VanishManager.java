@@ -1,4 +1,4 @@
-package ru.allformine.afmcp.vanish;
+package ru.allformine.afmvanish.vanish;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.key.Keys;

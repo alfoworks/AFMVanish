@@ -1,4 +1,4 @@
-package ru.allformine.afmcp.commands;
+package ru.allformine.afmvanish.commands;
 
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;

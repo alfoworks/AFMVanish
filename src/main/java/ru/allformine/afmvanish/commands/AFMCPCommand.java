@@ -1,4 +1,4 @@
-package ru.allformine.afmcp.commands;
+package ru.allformine.afmvanish.commands;
 
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
@@ -10,8 +10,8 @@ import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
 
 public class AFMCPCommand implements CommandExecutor {
-    @Override
-    public CommandResult execute(CommandSource scr, CommandContext args) throws CommandException {
+    @SuppressWarnings("NullableProblems")
+    @Override public CommandResult execute(CommandSource scr, CommandContext args) throws CommandException {
         return CommandResult.success();
     }
 

@@ -1,4 +1,4 @@
-package ru.allformine.afmcp.vanish;
+package ru.allformine.afmvanish.vanish;
 
 import eu.crushedpixel.sponge.packetgate.api.event.PacketEvent;
 import eu.crushedpixel.sponge.packetgate.api.listener.PacketListenerAdapter;

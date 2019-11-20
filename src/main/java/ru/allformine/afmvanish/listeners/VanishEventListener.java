@@ -1,4 +1,4 @@
-package ru.allformine.afmcp.listeners;
+package ru.allformine.afmvanish.listeners;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.Entity;
@@ -18,8 +18,8 @@ import org.spongepowered.api.event.message.MessageChannelEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.event.server.ClientPingServerEvent;
 import org.spongepowered.api.item.inventory.InventoryArchetypes;
-import ru.allformine.afmcp.vanish.VanishEffects;
-import ru.allformine.afmcp.vanish.VanishManager;
+import ru.allformine.afmvanish.vanish.VanishEffects;
+import ru.allformine.afmvanish.vanish.VanishManager;
 
 import java.util.ArrayList;
 
