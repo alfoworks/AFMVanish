@@ -101,6 +101,11 @@ public class VanishEventListener {
         event.setCancelled(true);
     }
 
+    @Listener public void onChangeBlock(ChangeBlockEvent event, @Root Player player){
+        if (VanishManager.canInteract(player)) return;
+        event.setCancelled(true);
+    }
+
     // ========================================== //
 
     @Listener
