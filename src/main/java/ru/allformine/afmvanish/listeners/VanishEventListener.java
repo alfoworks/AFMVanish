@@ -7,6 +7,7 @@ import org.spongepowered.api.entity.weather.Lightning;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.action.InteractEvent;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
+import org.spongepowered.api.event.block.CollideBlockEvent;
 import org.spongepowered.api.event.command.TabCompleteEvent;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.filter.cause.First;
@@ -101,7 +102,7 @@ public class VanishEventListener {
         event.setCancelled(true);
     }
 
-    @Listener public void onChangeBlock(ChangeBlockEvent event, @Root Player player){
+    @Listener public void onCollide(CollideBlockEvent event, @Root Player player){
         if (VanishManager.canInteract(player)) return;
         event.setCancelled(true);
     }

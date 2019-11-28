@@ -26,7 +26,6 @@ public class VanishManager {
         return couldInteract.contains(player);
     }
 
-    @SuppressWarnings("WeakerAccess")
     public static void makeCanInteract(Player player){
         couldInteract.add(player);
     }
