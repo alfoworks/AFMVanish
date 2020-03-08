@@ -54,6 +54,7 @@ public class VanishManager {
         makeCantInteract(player);
 
         vanishNotify(String.format(onJoin ? "%s скрытно вошёл в игру" : "%s вошел в ваниш", player.getName()));
+        sendMessageToPlayer(player, "Вы находитесь в ванише. Напишите /vanish чтобы выйти.");
     }
 
     public static void unvanishPlayer(Player player, boolean onLeave) {
@@ -102,5 +103,9 @@ public class VanishManager {
 
     private static void vanishNotify(String message) {
         MessageChannel.permission(vanishPermission).send(Text.builder().append(Text.of(message)).color(TextColors.DARK_AQUA).build());
+    }
+
+    private static void sendMessageToPlayer(Player player, String message) {
+        player.sendMessage(Text.builder("AFMVanish").color(TextColors.DARK_AQUA).append(Text.builder(" > ").color(TextColors.WHITE).append(Text.of(message)).build()).build());
     }
 }

@@ -6,9 +6,11 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.weather.Lightning;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.action.InteractEvent;
+import org.spongepowered.api.event.advancement.AdvancementEvent;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
 import org.spongepowered.api.event.command.TabCompleteEvent;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
+import org.spongepowered.api.event.entity.DestructEntityEvent;
 import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.event.item.inventory.ChangeInventoryEvent;
@@ -76,15 +78,22 @@ public class VanishEventListener {
     }
 
     @Listener
-    public void onPlayerChat(MessageChannelEvent.Chat event, @First Player player) {
-        // if (!VanishManager.isVanished(player)) return;
-        if (VanishManager.canInteract(player)) return;
-
-        event.setCancelled(true);
+    public void onInvChange(ChangeInventoryEvent.Pickup event) {
+        event.setCancelled(!VanishManager.canInteract((Player) event.getSource()));
     }
 
     @Listener
-    public void onPickup(ChangeInventoryEvent.Pickup event, @Root Player player) {
+    public void onAdvancement(AdvancementEvent.Grant event) {
+        event.setMessageCancelled(!VanishManager.canInteract(event.getTargetEntity()));
+    }
+
+    @Listener
+    public void onDeath(DestructEntityEvent.Death event) {
+        event.setMessageCancelled(event.getTargetEntity() instanceof Player && !VanishManager.canInteract((Player) event.getTargetEntity()));
+    }
+
+    @Listener
+    public void onPlayerChat(MessageChannelEvent.Chat event, @First Player player) {
         // if (!VanishManager.isVanished(player)) return;
         if (VanishManager.canInteract(player)) return;
 
@@ -101,7 +110,8 @@ public class VanishEventListener {
         event.setCancelled(true);
     }
 
-    @Listener public void onChangeBlock(ChangeBlockEvent event, @Root Player player){
+    @Listener
+    public void onChangeBlock(ChangeBlockEvent event, @Root Player player) {
         if (VanishManager.canInteract(player)) return;
         event.setCancelled(true);
     }
@@ -133,7 +143,6 @@ public class VanishEventListener {
             if (entity instanceof Lightning && VanishEffects.lightnings.contains(entity)) event.setCancelled(true);
         }
     }
-
 
     // ====================================================== //
 }
