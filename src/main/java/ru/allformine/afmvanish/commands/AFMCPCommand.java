@@ -10,20 +10,21 @@ import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
 
 public class AFMCPCommand implements CommandExecutor {
-    @Override
-    public CommandResult execute(CommandSource scr, CommandContext args) throws CommandException {
-        return CommandResult.success();
-    }
-
-    public String getName() {
-        return "";
-    }
-
-    public TextColor getColor() {
-        return TextColors.BLACK;
-    }
-
-    void reply(CommandSource source, Text text) {
-        source.sendMessage(Text.builder(getName()).color(getColor()).append(Text.builder(" > ").color(TextColors.WHITE).append(text).build()).build());
-    }
+	
+	@Override
+	public CommandResult execute(CommandSource scr, CommandContext args) throws CommandException {
+		return CommandResult.success();
+	}
+	
+	public String getName() {
+		return "";
+	}
+	
+	public TextColor getColor() {
+		return TextColors.BLACK;
+	}
+	
+	void reply(CommandSource source, Text text) {
+		source.sendMessage(Text.builder(getName()).color(getColor()).append(Text.builder(" > ").color(TextColors.WHITE).append(text).build()).build());
+	}
 }

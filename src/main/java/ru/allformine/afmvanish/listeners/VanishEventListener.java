@@ -8,7 +8,6 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.action.InteractEvent;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
 import org.spongepowered.api.event.block.CollideBlockEvent;
-import org.spongepowered.api.event.block.CollideBlockEvent;
 import org.spongepowered.api.event.command.TabCompleteEvent;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.filter.cause.First;
@@ -25,117 +24,119 @@ import ru.allformine.afmvanish.vanish.VanishManager;
 import java.util.ArrayList;
 
 public class VanishEventListener {
-    @Listener
-    public void onPlayerJoin(ClientConnectionEvent.Join event) {
-        if (!event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
-            VanishManager.tabList.addTabListPlayer(event.getTargetEntity().getName());
-            VanishManager.makeCanInteract(event.getTargetEntity());
-
-            return;
-        }
-
-        if (event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
-            VanishManager.vanishPlayer(event.getTargetEntity(), true);
-        }
-
-        event.setMessageCancelled(true);
-    }
-
-    @Listener
-    public void onPlayerQuit(ClientConnectionEvent.Disconnect event) {
-        if (!event.getTargetEntity().hasPermission(VanishManager.vanishPermission) || !VanishManager.isVanished(event.getTargetEntity())) {
-            VanishManager.tabList.removeTabListPlayer(event.getTargetEntity().getName());
-
-            return;
-        }
-
-        if (event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
-            VanishManager.unvanishPlayer(event.getTargetEntity(), true);
-        }
-
-        event.setMessageCancelled(true);
-    }
-
-    @Listener
-    public void onTabComplete(TabCompleteEvent event) {
-        for (String text : new ArrayList<>(event.getTabCompletions())) {
-            Sponge.getServer().getPlayer(text).ifPresent(player -> {
-                if (VanishManager.isVanished(player)) {
-                    event.getTabCompletions().remove(text);
-                }
-            });
-        }
-    }
-
-    // ========================================== //
-
-    @Listener
-    public void onInteract(InteractEvent event, @Root Player player) {
-        // if (!VanishManager.isVanished(player)) return;
-        if (VanishManager.canInteract(player)) return;
-
-        event.setCancelled(true);
-    }
-
-    @Listener
-    public void onPlayerChat(MessageChannelEvent.Chat event, @First Player player) {
-        // if (!VanishManager.isVanished(player)) return;
-        if (VanishManager.canInteract(player)) return;
-
-        event.setCancelled(true);
-    }
-
-    @Listener
-    public void onPickup(ChangeInventoryEvent.Pickup event, @Root Player player) {
-        // if (!VanishManager.isVanished(player)) return;
-        if (VanishManager.canInteract(player)) return;
-
-        event.setCancelled(true);
-    }
-
-    @Listener
-    public void onClickInventory(ClickInventoryEvent event, @Root Player player) {
-        // if (!VanishManager.isVanished(player)) return;
-        if (VanishManager.canInteract(player)) return;
-        if (event instanceof ClickInventoryEvent.NumberPress) return;
-        if (event instanceof ClickInventoryEvent.Middle) return;
-        if (event.getTargetInventory().getArchetype() == InventoryArchetypes.PLAYER) return;
-        event.setCancelled(true);
-    }
-
-    @Listener public void onCollide(CollideBlockEvent event, @Root Player player){
-        if (VanishManager.canInteract(player)) return;
-        event.setCancelled(true);
-    }
-
-    // ========================================== //
-
-    @Listener
-    public void onClientPingServerEvent(ClientPingServerEvent event) {
-        if (!event.getResponse().getPlayers().isPresent()) return;
-
-        ClientPingServerEvent.Response.Players players = event.getResponse().getPlayers().get();
-        players.setOnline(VanishManager.getPlayerCountExcludingVanished());
-
-        players.getProfiles().removeIf(gameProfile -> VanishManager.isVanished(Sponge.getServer().getPlayer(gameProfile.getUniqueId()).get()));
-    }
-
-    // =Отмена дамага от молнии (эффект переключения ваниша)= //
-
-    @Listener
-    public void onEntityDamage(DamageEntityEvent event) {
-        for (Entity entity : event.getCause().allOf(Entity.class)) {
-            if (entity instanceof Lightning && VanishEffects.lightnings.contains(entity)) event.setCancelled(true);
-        }
-    }
-
-    @Listener
-    public void onBlockPlace(ChangeBlockEvent event) {
-        for (Entity entity : event.getCause().allOf(Entity.class)) {
-            if (entity instanceof Lightning && VanishEffects.lightnings.contains(entity)) event.setCancelled(true);
-        }
-    }
-
-
-    // ====================================================== //
+	
+	@Listener
+	public void onPlayerJoin(ClientConnectionEvent.Join event) {
+		if (!event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
+			VanishManager.tabList.addTabListPlayer(event.getTargetEntity().getName());
+			VanishManager.makeCanInteract(event.getTargetEntity());
+			
+			return;
+		}
+		
+		if (event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
+			VanishManager.vanishPlayer(event.getTargetEntity(), true);
+		}
+		
+		event.setMessageCancelled(true);
+	}
+	
+	@Listener
+	public void onPlayerQuit(ClientConnectionEvent.Disconnect event) {
+		if (!event.getTargetEntity().hasPermission(VanishManager.vanishPermission) || !VanishManager.isVanished(event.getTargetEntity())) {
+			VanishManager.tabList.removeTabListPlayer(event.getTargetEntity().getName());
+			
+			return;
+		}
+		
+		if (event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
+			VanishManager.unvanishPlayer(event.getTargetEntity(), true);
+		}
+		
+		event.setMessageCancelled(true);
+	}
+	
+	@Listener
+	public void onTabComplete(TabCompleteEvent event) {
+		for (String text : new ArrayList<>(event.getTabCompletions())) {
+			Sponge.getServer().getPlayer(text).ifPresent(player -> {
+				if (VanishManager.isVanished(player)) {
+					event.getTabCompletions().remove(text);
+				}
+			});
+		}
+	}
+	
+	// ========================================== //
+	
+	@Listener
+	public void onInteract(InteractEvent event, @Root Player player) {
+		// if (!VanishManager.isVanished(player)) return;
+		if (VanishManager.canInteract(player)) return;
+		
+		event.setCancelled(true);
+	}
+	
+	@Listener
+	public void onPlayerChat(MessageChannelEvent.Chat event, @First Player player) {
+		// if (!VanishManager.isVanished(player)) return;
+		if (VanishManager.canInteract(player)) return;
+		
+		event.setCancelled(true);
+	}
+	
+	@Listener
+	public void onPickup(ChangeInventoryEvent.Pickup event, @Root Player player) {
+		// if (!VanishManager.isVanished(player)) return;
+		if (VanishManager.canInteract(player)) return;
+		
+		event.setCancelled(true);
+	}
+	
+	@Listener
+	public void onClickInventory(ClickInventoryEvent event, @Root Player player) {
+		// if (!VanishManager.isVanished(player)) return;
+		if (VanishManager.canInteract(player)) return;
+		if (event instanceof ClickInventoryEvent.NumberPress) return;
+		if (event instanceof ClickInventoryEvent.Middle) return;
+		if (event.getTargetInventory().getArchetype() == InventoryArchetypes.PLAYER) return;
+		event.setCancelled(true);
+	}
+	
+	@Listener
+	public void onCollide(CollideBlockEvent event, @Root Player player) {
+		if (VanishManager.canInteract(player)) return;
+		event.setCancelled(true);
+	}
+	
+	// ========================================== //
+	
+	@Listener
+	public void onClientPingServerEvent(ClientPingServerEvent event) {
+		if (!event.getResponse().getPlayers().isPresent()) return;
+		
+		ClientPingServerEvent.Response.Players players = event.getResponse().getPlayers().get();
+		players.setOnline(VanishManager.getPlayerCountExcludingVanished());
+		
+		players.getProfiles().removeIf(gameProfile -> VanishManager.isVanished(Sponge.getServer().getPlayer(gameProfile.getUniqueId()).get()));
+	}
+	
+	// =Отмена дамага от молнии (эффект переключения ваниша)= //
+	
+	@Listener
+	public void onEntityDamage(DamageEntityEvent event) {
+		for (Entity entity : event.getCause().allOf(Entity.class)) {
+			if (entity instanceof Lightning && VanishEffects.lightnings.contains(entity)) event.setCancelled(true);
+		}
+	}
+	
+	@Listener
+	public void onBlockPlace(ChangeBlockEvent event) {
+		for (Entity entity : event.getCause().allOf(Entity.class)) {
+			if (entity instanceof Lightning && VanishEffects.lightnings.contains(entity)) event.setCancelled(true);
+		}
+	}
+	
+	
+	// ====================================================== //
 }

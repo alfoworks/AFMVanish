@@ -9,15 +9,16 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 public class VanishPacketListener extends PacketListenerAdapter {
+    
     @Override
     public void onPacketWrite(PacketEvent event, PacketConnection connection) {
         try {
             if (!(event.getPacket() instanceof SPacketPlayerListItem)) {
                 return;
             }
-
+            
             SPacketPlayerListItem packet = (SPacketPlayerListItem) event.getPacket();
-
+            
             for (Method method : packet.getClass().getDeclaredMethods()) {
                 if (method.toString().contains("getAction")) {
                     if (method.invoke(packet) == SPacketPlayerListItem.Action.REMOVE_PLAYER) {
@@ -25,7 +26,7 @@ public class VanishPacketListener extends PacketListenerAdapter {
                     }
                 }
             }
-
+            
             for (Method method : packet.getClass().getDeclaredMethods()) {
                 if (method.toString().contains("getPlayerDatas")) {
                     ((List<SPacketPlayerListItem.AddPlayerData>) method.invoke(packet)).forEach(entry -> {

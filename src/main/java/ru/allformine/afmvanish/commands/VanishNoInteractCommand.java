@@ -10,38 +10,39 @@ import org.spongepowered.api.text.format.TextColors;
 import ru.allformine.afmvanish.vanish.VanishManager;
 
 public class VanishNoInteractCommand extends AFMCPCommand {
-    @Override
-    public CommandResult execute(CommandSource src, CommandContext args) {
-        if (src instanceof Player) {
-            if (!VanishManager.isVanished((Player) src)) {
-                reply(src, Text.of("Для выполнения этой команды вы должны находиться в ванише."));
-                return CommandResult.success();
-            }
-
-            boolean state = VanishManager.switchCanInteract((Player) src);
-
-            Text.Builder text = Text.builder();
-            text.append(Text.of("Теперь вы "));
-
-            if (state) text.append(Text.of("можете"));
-            else text.append(Text.builder().append(Text.of("не можете")).color(TextColors.RED).build());
-
-            text.append(Text.of(" взаимодействовать с миром."));
-
-            reply(src, text.build());
-        } else {
-            reply(src, Text.of("Еблан, от консоли нельзя"));
-        }
-        return CommandResult.success();
-    }
-
-    @Override
-    public String getName() {
-        return "Vanish";
-    }
-
-    @Override
-    public TextColor getColor() {
-        return TextColors.DARK_AQUA;
-    }
+	
+	@Override
+	public CommandResult execute(CommandSource src, CommandContext args) {
+		if (src instanceof Player) {
+			if (!VanishManager.isVanished((Player) src)) {
+				reply(src, Text.of("Для выполнения этой команды вы должны находиться в ванише."));
+				return CommandResult.success();
+			}
+			
+			boolean state = VanishManager.switchCanInteract((Player) src);
+			
+			Text.Builder text = Text.builder();
+			text.append(Text.of("Теперь вы "));
+			
+			if (state) text.append(Text.of("можете"));
+			else text.append(Text.builder().append(Text.of("не можете")).color(TextColors.RED).build());
+			
+			text.append(Text.of(" взаимодействовать с миром."));
+			
+			reply(src, text.build());
+		} else {
+			reply(src, Text.of("Еблан, от консоли нельзя"));
+		}
+		return CommandResult.success();
+	}
+	
+	@Override
+	public String getName() {
+		return "Vanish";
+	}
+	
+	@Override
+	public TextColor getColor() {
+		return TextColors.DARK_AQUA;
+	}
 }
