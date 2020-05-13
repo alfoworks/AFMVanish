@@ -5,6 +5,7 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.tab.TabList;
 import org.spongepowered.api.entity.living.player.tab.TabListEntry;
 import org.spongepowered.api.text.Text;
+import ru.allformine.afmvanish.AFMVanish;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,10 +40,12 @@ public class VanishTabList {
     }
     
     private void updateTabList() {
+        if (!AFMVanish.shouldUpdate) return;
+    
         Sponge.getServer().getOnlinePlayers().forEach(player -> {
             TabList playerTabList = player.getTabList();
             Collection<TabListEntry> entriesCopy = new ArrayList<>(playerTabList.getEntries());
-            
+        
             entriesCopy.forEach(entry -> playerTabList.removeEntry(entry.getProfile().getUniqueId())); // Удаление всех записей
             tabList.forEach(nickname -> playerTabList.addEntry(getTabListEntryForPlayer(nickname, playerTabList)));
         });

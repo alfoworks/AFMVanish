@@ -30,6 +30,9 @@ authors = {
 )
 public class AFMVanish {
 	
+	public static boolean shouldUpdate = true;
+	
+	
 	@Listener
 	public void preInit(GamePreInitializationEvent event) {
 		Sponge.getEventManager().registerListeners(this, new VanishEventListener());
@@ -58,5 +61,7 @@ public class AFMVanish {
 	public void onServerStart(GameStartedServerEvent event) {
 		Optional<PacketGate> optional = Sponge.getServiceManager().provide(PacketGate.class);
 		optional.ifPresent(packetGate -> packetGate.registerListener(new VanishPacketListener(), PacketListener.ListenerPriority.FIRST, SPacketPlayerListItem.class));
+		
+		shouldUpdate = !Sponge.getPluginManager().isLoaded("afmcp");
 	}
 }
