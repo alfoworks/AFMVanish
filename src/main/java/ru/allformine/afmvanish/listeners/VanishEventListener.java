@@ -37,7 +37,7 @@ public class VanishEventListener {
 		if (event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
 			VanishManager.vanishPlayer(event.getTargetEntity(), true);
 		}
-		
+
 		event.setMessageCancelled(true);
 	}
 	
@@ -51,9 +51,8 @@ public class VanishEventListener {
 		
 		if (event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
 			VanishManager.unvanishPlayer(event.getTargetEntity(), true);
+			event.setMessageCancelled(true);
 		}
-		
-		event.setMessageCancelled(true);
 	}
 	
 	@Listener
