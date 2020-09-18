@@ -29,28 +29,20 @@ public class VanishEventListener {
 	public void onPlayerJoin(ClientConnectionEvent.Join event) {
 		if (!event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
 			VanishManager.tabList.addTabListPlayer(event.getTargetEntity().getName());
-			VanishManager.makeCanInteract(event.getTargetEntity());
-			
-			return;
-		}
-		
-		if (event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
+		} else {
 			VanishManager.vanishPlayer(event.getTargetEntity(), true);
-		}
 
-		event.setMessageCancelled(true);
+			event.setMessageCancelled(true);
+		}
 	}
 	
 	@Listener
 	public void onPlayerQuit(ClientConnectionEvent.Disconnect event) {
-		if (!event.getTargetEntity().hasPermission(VanishManager.vanishPermission) || !VanishManager.isVanished(event.getTargetEntity())) {
-			VanishManager.tabList.removeTabListPlayer(event.getTargetEntity().getName());
-			
-			return;
-		}
-		
-		if (event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
+		if (VanishManager.isVanished(event.getTargetEntity())) {
 			VanishManager.unvanishPlayer(event.getTargetEntity(), true);
+		}
+
+		if (event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
 			event.setMessageCancelled(true);
 		}
 	}
