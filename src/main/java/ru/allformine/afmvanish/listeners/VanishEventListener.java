@@ -29,6 +29,7 @@ public class VanishEventListener {
 	public void onPlayerJoin(ClientConnectionEvent.Join event) {
 		if (!event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
 			VanishManager.tabList.addTabListPlayer(event.getTargetEntity().getName());
+			VanishManager.makeCanInteract(event.getTargetEntity());
 		} else {
 			VanishManager.vanishPlayer(event.getTargetEntity(), true);
 
@@ -40,6 +41,7 @@ public class VanishEventListener {
 	public void onPlayerQuit(ClientConnectionEvent.Disconnect event) {
 		if (VanishManager.isVanished(event.getTargetEntity())) {
 			VanishManager.unvanishPlayer(event.getTargetEntity(), true);
+			VanishManager.makeCantInteract(event.getTargetEntity());
 		}
 
 		if (event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {

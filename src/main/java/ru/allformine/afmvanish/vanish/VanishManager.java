@@ -60,7 +60,10 @@ public class VanishManager {
 		setVanish(player, false, onLeave);
 		
 		vanishedPlayers.remove(player);
-		makeCanInteract(player);
+
+		if (!onLeave) {
+			makeCanInteract(player);
+		}
 		
 		vanishNotify(String.format(onLeave ? "%s вышел из игры (персонал)" : "%s вышел из ваниша", player.getName()));
 		
