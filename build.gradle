@@ -33,13 +33,17 @@ targetCompatibility = '1.8'
 dependencies {
     compile 'org.spongepowered:spongeapi:7.1.0'
 
-    compile name: 'packetgate'
+    compile fileTree(dir: "libs", includes: ['*.jar'])
 }
 
 jar {
     archiveName "afmvanish.jar"
     baseName = 'afmvanish'
     version =  version
+
+    manifest {
+        attributes("FMLCorePluginContainsFMLMod": "true", "FMLCorePlugin": "ru.alfomine.afmvanish.hooks.VanishHookLoader")
+    }
 }
 
 task copyForShared(type: Copy){
