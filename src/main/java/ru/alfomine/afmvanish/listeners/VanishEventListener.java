@@ -3,6 +3,7 @@ package ru.alfomine.afmvanish.listeners;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.Order;
 import org.spongepowered.api.event.action.InteractEvent;
 import org.spongepowered.api.event.block.CollideBlockEvent;
 import org.spongepowered.api.event.command.TabCompleteEvent;
@@ -34,11 +35,13 @@ public class VanishEventListener {
 		}
 	}
 	
-	@Listener
+	@Listener(order = Order.PRE)
 	public void onPlayerQuit(ClientConnectionEvent.Disconnect event) {
 		if (VanishManager.isVanished(event.getTargetEntity())) {
 			VanishManager.unvanishPlayer(event.getTargetEntity(), false, true);
 			VanishManager.interactDenyList.remove(event.getTargetEntity());
+		} else {
+			VanishManager.tablistVisibleList.remove(event.getTargetEntity().getName());
 		}
 
 		if (event.getTargetEntity().hasPermission(VanishManager.vanishPermission)) {
